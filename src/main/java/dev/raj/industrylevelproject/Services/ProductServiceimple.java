@@ -23,10 +23,9 @@ import java.util.Optional;
 @Service
 public class ProductServiceimple implements ProductService{
 
-    RestTemplateBuilder restTemplateBuilder;
     FakeStoreClient fakeStoreClient;
-    public ProductServiceimple(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
-        this.restTemplateBuilder = restTemplateBuilder;
+    public ProductServiceimple(FakeStoreClient fakeStoreClient) {
+
         this.fakeStoreClient = fakeStoreClient;
     }
 
@@ -40,19 +39,6 @@ public class ProductServiceimple implements ProductService{
         category.setName(productDto1.getCategory());
         product.setCategory(category);
         return  product;
-    }
-
-
-    public <T> ResponseEntity<T> requestForEntity(String url, HttpMethod httpMethod, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
-        RestTemplate restTemplate = restTemplateBuilder.requestFactory(HttpComponentsClientHttpRequestFactory.class).build();
-        //requestFactory() is used to set the request factory to use for obtaining client-side HTTP connections
-        // used to get patch reqest patch directly dosnt suppot so we use thrid party client to do patch request
-
-
-
-        RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
-        ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
-        return restTemplate.execute(url, httpMethod, requestCallback, responseExtractor, uriVariables);
     }
     @Override
     public List<Product> getAllProducts() {
@@ -70,19 +56,12 @@ public class ProductServiceimple implements ProductService{
 
     @Override
     public Optional<Product> getProductById(Long id) {
-        RestTemplate restTemplate = restTemplateBuilder.build();//build() is used to build the object of RestTemplate
-        ResponseEntity<FakeStoreproductDto> response =  restTemplate.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreproductDto.class,id);
-
+        ResponseEntity<FakeStoreproductDto> fakestorentity = fakeStoreClient.getProductById(id);
         // responseEntity is for getting header, body, status code, as response
-
-
-        if(response.getStatusCode().is1xxInformational()){
+        if(fakestorentity.getStatusCode().is1xxInformational()){
             //status code checking with responseentity response
         };
-
-        //converting productDto to product
-        FakeStoreproductDto productDto = response.getBody();
-
+        FakeStoreproductDto productDto = fakestorentity.getBody();
         if(productDto==null){ //Optional is used to avoid null pointer exception
             return Optional.empty(); // Optional.empty() is used to return the value
         }
@@ -91,8 +70,7 @@ public class ProductServiceimple implements ProductService{
 
     @Override
     public Product addProduct(productDto product){
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreproductDto> response = restTemplate.postForEntity("https://fakestoreapi.com/products", product, FakeStoreproductDto.class);
+        ResponseEntity<FakeStoreproductDto> response = fakeStoreClient.addProduct(product);
         FakeStoreproductDto productDto = response.getBody();
         return convertFakeStoreProductDtoToProduct(productDto);
     }
@@ -107,20 +85,22 @@ public class ProductServiceimple implements ProductService{
         productDto.setDescription(product.getDescription());
         productDto.setCategory(product.getCategory().getName());
 
-       ResponseEntity<FakeStoreproductDto> fakeStoreproductDtoResponseEntity =
-               requestForEntity("https://fakestoreapi.com/products/{id}", HttpMethod.PATCH, productDto, FakeStoreproductDto.class, productId);
+        ResponseEntity<FakeStoreproductDto> fakeStoreproductDtoResponseEntity =
+                fakeStoreClient.updateProduct(productId, productDto);
        return  fakeStoreproductDtoResponseEntity;
     }
 
     public Product replaceProduct(Long productId, productDto productDto) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreproductDto> response =  requestForEntity("https://fakestoreapi.com/products/{id}", HttpMethod.PUT, productDto, FakeStoreproductDto.class, productId);
-        Product productdata =  convertFakeStoreProductDtoToProduct(response.getBody());
+        Product product = new Product();
+        ResponseEntity<FakeStoreproductDto> fakestoreproduct = fakeStoreClient.replaceProduct(productId, productDto);
+        Product productdata =  convertFakeStoreProductDtoToProduct(fakestoreproduct.getBody());
       return productdata;
     }
 
     @Override
-    public void deleteProduct(int id) {
-
+    public Product deleteProduct(Long id) {
+       ResponseEntity<FakeStoreproductDto> response =  fakeStoreClient.deleteProduct(id);
+       FakeStoreproductDto product =  response.getBody();
+       return convertFakeStoreProductDtoToProduct(product);
     }
 }

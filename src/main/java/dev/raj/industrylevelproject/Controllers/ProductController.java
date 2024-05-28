@@ -43,26 +43,21 @@ public class ProductController {
     public ResponseEntity<ProductResponseDto> getSingleProduct(@PathVariable("product_id") Long Productid) throws  NotFoundException { // @PathVariable is used to get the value of the variable in the url
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("auth-token", "123456");
-
-            // In the getSingleProduct method,
+        // In the getSingleProduct method,
         // the NotFoundException is being thrown but not caught.
         // Therefore, it must be declared in the method signature.
         // This informs the callers of the method that they need to handle this exception
-
         Optional<Product> products = productService.getProductById(Productid);
         if(products.isEmpty()){
             throw new NotFoundException("product wrong");
         }
-
         //productsercice returning product model type but controller has to return dto only
         //so we are creating dto object and setting the product object in it and returning the dto object
         ResponseEntity<ProductResponseDto> response = new ResponseEntity(
                 productService.getProductById(Productid),
                 headers,  // sending headers along with response
                 HttpStatus.NOT_FOUND);
-
         //headers sending alog with responsenentity
-
         return response;
     }
 
@@ -107,8 +102,15 @@ public class ProductController {
     }
 
     @DeleteMapping("/{product_id}")
-    public String deleteproduct(@PathVariable("product_id") Long productId){
-        return "product deleted"+productId;
+    public productDto deleteproduct(@PathVariable("product_id") Long productId){
+        Product product=   productService.deleteProduct(productId);
+        productDto productDto = new productDto();
+        productDto.setTitle(product.getTitle());
+        productDto.setDescription(product.getDescription());
+        productDto.setPrice(product.getPrice());
+        productDto.setCategory(product.getCategory().getName());
+        productDto.setImage(product.getImage());
+        return productDto;
     }
 
 

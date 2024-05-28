@@ -14,7 +14,7 @@ public interface ProductService {
     public Optional<Product> getProductById(Long id);
     public Product addProduct(productDto product);
     public ResponseEntity<FakeStoreproductDto> updateProduct(Long productId, Product product);
-    public void deleteProduct(int id);
+    public Product deleteProduct(Long id);
 
     public Product replaceProduct(Long productId, productDto productDto);
 
