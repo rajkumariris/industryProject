@@ -20,7 +20,7 @@ import java.util.Optional;
 //tells spring inside the class some http methods are there register that in your dispacher if
 //particular call on that is coming serve that
 @RestController //tells spring this is a controller class
-@RequestMapping("/products") //@Requestmapping /products we need not to use every time in other methods /products
+@RequestMapping("/products") //@Requestmapping /products we need not to use every time in other methods /products as prefix
 public class ProductController {
 
     ProductService productService; //creating object of ProductService class
@@ -54,7 +54,8 @@ public class ProductController {
         //productsercice returning product model type but controller has to return dto only
         //so we are creating dto object and setting the product object in it and returning the dto object
         ResponseEntity<ProductResponseDto> response = new ResponseEntity(
-                productService.getProductById(Productid),
+                //productService.getProductById(Productid),
+                products,
                 headers,  // sending headers along with response
                 HttpStatus.NOT_FOUND);
         //headers sending alog with responsenentity
@@ -65,7 +66,6 @@ public class ProductController {
     public ResponseEntity<Product> addProduct(@RequestBody productDto product){ // productDto is a class which get data from url body parse it from
         //json to java object and store it in productDto object using jackson line by line
         //RequestBody is used to get the data from the body of the url
-
        Product product2=  productService.addProduct(product); //calling addProduct method of ProductService class and passing productDto object as argument
         ResponseEntity<Product> response = new ResponseEntity(product2, HttpStatus.CREATED);
         return response;
