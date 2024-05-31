@@ -92,8 +92,9 @@ class IndustrylevelprojectApplicationTests {
     }
 
     @Test
+    @Transactional
     void allCategories(){
-        List<Category> category = categoryRepository.findAllCategories(List.of(1L,2L));
+        List<Category> category = categoryRepository.findAllByIdIn(List.of(1L,2L));
         for(Category c : category){
             for(Product p : c.getProducts()){
                 System.out.println(p.getPrice());
