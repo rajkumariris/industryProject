@@ -69,7 +69,7 @@ public class ProductServiceimple implements ProductService{
     }
 
     @Override
-    public Product addProduct(productDto product){
+    public Product addProduct(Product product){
         ResponseEntity<FakeStoreproductDto> response = fakeStoreClient.addProduct(product);
         FakeStoreproductDto productDto = response.getBody();
         return convertFakeStoreProductDtoToProduct(productDto);

@@ -49,7 +49,7 @@ public class FakeStoreClient {
         return response;
 
     }
-    public ResponseEntity<FakeStoreproductDto> addProduct(productDto product){
+    public ResponseEntity<FakeStoreproductDto> addProduct(Product product){
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreproductDto> response = restTemplate.postForEntity("https://fakestoreapi.com/products", product, FakeStoreproductDto.class);
         return response;

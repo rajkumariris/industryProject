@@ -1,9 +1,11 @@
 package dev.raj.industrylevelproject;
 
+import dev.raj.industrylevelproject.DTOs.ProductDBDto;
 import dev.raj.industrylevelproject.InheritanceExamples.SingleClass.*;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
 import dev.raj.industrylevelproject.Repositories.CategoryRepository;
+import dev.raj.industrylevelproject.Repositories.ProductDBRepository;
 import dev.raj.industrylevelproject.Repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,9 @@ class IndustrylevelprojectApplicationTests {
     CategoryRepository categoryRepository;
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductDBRepository productDBRepository;
     @Test
     void contextLoads() {
     }
@@ -100,6 +105,12 @@ class IndustrylevelprojectApplicationTests {
                 System.out.println(p.getPrice());
             }
         }
+    }
+
+    @Test
+    @Transactional
+    void JpamethodTest(){
+        ProductDBDto productDBDto =  productDBRepository.IvvuProduct(1L);
     }
 
 }

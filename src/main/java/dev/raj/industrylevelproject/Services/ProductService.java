@@ -12,7 +12,7 @@ public interface ProductService {
 
     public List<Product> getAllProducts();
     public Optional<Product> getProductById(Long id);
-    public Product addProduct(productDto product);
+    public Product addProduct(Product product);
     public ResponseEntity<FakeStoreproductDto> updateProduct(Long productId, Product product);
     public Product deleteProduct(Long id);
 

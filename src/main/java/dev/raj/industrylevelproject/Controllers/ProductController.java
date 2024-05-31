@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-//@Controller , @Service, @Repository are the stereotype annotations in spring which are used for auto-detection and dependency injection of spring beans or creating beans
-//tells spring inside the class some http methods are there register that in your dispacher if
+//@Controller , @Service, @Repository are the stereotype annotations in spring   creating beans
+//@RestController tells spring inside the class some http methods are there register that in your dispacher if
 //particular call on that is coming serve that
 @RestController //tells spring this is a controller class
 @RequestMapping("/products") //@Requestmapping /products we need not to use every time in other methods /products as prefix
@@ -28,7 +28,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-
+// controller class should always return dto object only
 
 
     @GetMapping()//if the url is /products then this method will be called
@@ -40,9 +40,14 @@ public class ProductController {
     @GetMapping("/{product_id}") //if the url is /products/{product_id} then this method will be called
     // here product_id is a variable getting it from the url
     //setting headers using map
-    public ResponseEntity<ProductResponseDto> getSingleProduct(@PathVariable("product_id") Long Productid) throws  NotFoundException { // @PathVariable is used to get the value of the variable in the url
+    // @PathVariable is used to get the value of the variable in the url
+    public ResponseEntity<ProductResponseDto> getSingleProduct(@PathVariable("product_id") Long Productid) throws  NotFoundException {
+        //multivalue map is used to send headers along with response
+
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("auth-token", "123456");
+
+
         // In the getSingleProduct method,
         // the NotFoundException is being thrown but not caught.
         // Therefore, it must be declared in the method signature.
@@ -66,8 +71,17 @@ public class ProductController {
     public ResponseEntity<Product> addProduct(@RequestBody productDto product){ // productDto is a class which get data from url body parse it from
         //json to java object and store it in productDto object using jackson line by line
         //RequestBody is used to get the data from the body of the url
-       Product product2=  productService.addProduct(product); //calling addProduct method of ProductService class and passing productDto object as argument
-        ResponseEntity<Product> response = new ResponseEntity(product2, HttpStatus.CREATED);
+
+
+        Product product2 = new Product();
+        product2.setTitle(product.getTitle());
+        product2.setDescription(product.getDescription());
+        product2.setPrice(product.getPrice());
+        Category category = new Category();
+        category.setName(product.getCategory());
+        product2.setCategory(category);
+        Product product3=  productService.addProduct(product2); //calling addProduct method of ProductService class and passing productDto object as argument
+        ResponseEntity<Product> response = new ResponseEntity(product3, HttpStatus.CREATED);
         return response;
     }
 
