@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 public class ErrorHanlderdto {
 
-    public String errorMessage;
+    private String errorMessage;
+    private int httcode;
 }

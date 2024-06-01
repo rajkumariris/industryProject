@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductDBRepository extends JpaRepository<Product, Long>{
 
@@ -22,7 +24,21 @@ public interface ProductDBRepository extends JpaRepository<Product, Long>{
     // title of row with title of productDBDto
 
 
+    Product  findProductById(Long id);
+
+
+    void deleteProductById(Long id);
+
     //check queires interface here we used Queries.IVVU_PRODUCTS this is varaible value is in queries interface
     @Query(value = Queries.IVVU_PRODUCTS, nativeQuery = true)
     ProductDBDto IvvuProduct(Long id);
+
+
+    //JPA queries this query based on model we write Product is a model variable name should
+    // match names in models
+    //Java + SQL
+    @Query("select p from Product p where p.id = :id and p.category.Name = :title")
+    public List<Product> getByIdAndTitle(Long id, String title);
+
+
 }

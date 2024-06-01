@@ -1,12 +1,11 @@
 package dev.raj.industrylevelproject;
 
 import dev.raj.industrylevelproject.DTOs.ProductDBDto;
-import dev.raj.industrylevelproject.InheritanceExamples.SingleClass.*;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
-import dev.raj.industrylevelproject.Repositories.CategoryRepository;
+import dev.raj.industrylevelproject.Repositories.FakeStoreRepositories.CategoryRepository;
 import dev.raj.industrylevelproject.Repositories.ProductDBRepository;
-import dev.raj.industrylevelproject.Repositories.ProductRepository;
+import dev.raj.industrylevelproject.Repositories.FakeStoreRepositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +109,15 @@ class IndustrylevelprojectApplicationTests {
     @Test
     @Transactional
     void JpamethodTest(){
-        ProductDBDto productDBDto =  productDBRepository.IvvuProduct(1L);
+      //  ProductDBDto productDBDto =  productDBRepository.IvvuProduct(1L);
+    }
+
+
+    //--------------------db crud one test cases-------------------
+
+    @Test
+    void  addProduct(){
+
     }
 
 }

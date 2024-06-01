@@ -1,9 +1,8 @@
-package dev.raj.industrylevelproject.Controllers;
+package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
-import dev.raj.industrylevelproject.DTOs.FakeStoreCategoryDto;
-import dev.raj.industrylevelproject.Services.CategoryService;
+import dev.raj.industrylevelproject.Services.FakeStoreServices.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

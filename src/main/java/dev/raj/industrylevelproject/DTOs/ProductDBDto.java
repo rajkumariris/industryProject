@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDBDto {
-    private String title;
+    private int title;
 }

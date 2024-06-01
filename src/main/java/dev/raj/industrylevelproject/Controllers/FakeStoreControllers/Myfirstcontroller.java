@@ -1,7 +1,6 @@
-package dev.raj.industrylevelproject.Controllers;
+package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
-import dev.raj.industrylevelproject.Services.MyFirstService;
-import org.springframework.stereotype.Controller;
+import dev.raj.industrylevelproject.Services.FakeStoreServices.MyFirstService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

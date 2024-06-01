@@ -1,0 +1,22 @@
+ALTER TABLE product
+    ADD details VARCHAR(255) NULL;
+
+DROP TABLE tpc_instructor;
+
+DROP TABLE tpc_mentor;
+
+DROP TABLE tpc_ta;
+
+DROP TABLE tpc_user;
+
+ALTER TABLE ms_instructor
+    MODIFY id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE ms_mentor
+    MODIFY id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE ms_ta
+    MODIFY id BIGINT AUTO_INCREMENT;
+
+ALTER TABLE st_user
+    MODIFY id BIGINT AUTO_INCREMENT;

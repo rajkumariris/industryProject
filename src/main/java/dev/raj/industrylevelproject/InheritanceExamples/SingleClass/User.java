@@ -13,7 +13,7 @@ import lombok.Setter;
         discriminatorType = DiscriminatorType.INTEGER) // create sepearte column for type(1 for TA, 2 for Mentor, 3 for Instructor ))
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String password;

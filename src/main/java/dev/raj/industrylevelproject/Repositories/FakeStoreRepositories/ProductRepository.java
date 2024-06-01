@@ -1,4 +1,4 @@
-package dev.raj.industrylevelproject.Repositories;
+package dev.raj.industrylevelproject.Repositories.FakeStoreRepositories;
 
 import dev.raj.industrylevelproject.Models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

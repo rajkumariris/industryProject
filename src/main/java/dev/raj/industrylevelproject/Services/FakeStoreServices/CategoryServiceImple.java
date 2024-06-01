@@ -1,11 +1,8 @@
-package dev.raj.industrylevelproject.Services;
+package dev.raj.industrylevelproject.Services.FakeStoreServices;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreClient;
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
-import dev.raj.industrylevelproject.DTOs.FakeStoreCategoryDto;
-import dev.raj.industrylevelproject.Models.Category;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 

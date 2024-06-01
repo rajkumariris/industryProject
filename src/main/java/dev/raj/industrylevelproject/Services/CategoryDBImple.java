@@ -2,10 +2,11 @@ package dev.raj.industrylevelproject.Services;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
 import dev.raj.industrylevelproject.Repositories.CategoryDBRepository;
+import dev.raj.industrylevelproject.Services.FakeStoreServices.CategoryService;
 
 import java.util.List;
 
-public class CategoryDBImple implements CategoryService{
+public class CategoryDBImple implements CategoryService {
 
     CategoryDBRepository categoryDBRepository;
 

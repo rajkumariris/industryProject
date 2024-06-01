@@ -1,4 +1,4 @@
-package dev.raj.industrylevelproject.Controllers;
+package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
 
 import dev.raj.industrylevelproject.DTOs.ErrorHanlderdto;

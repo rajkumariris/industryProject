@@ -1,4 +1,4 @@
-package dev.raj.industrylevelproject.Services;
+package dev.raj.industrylevelproject.Services.FakeStoreServices;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
 import dev.raj.industrylevelproject.DTOs.FakeStoreCategoryDto;

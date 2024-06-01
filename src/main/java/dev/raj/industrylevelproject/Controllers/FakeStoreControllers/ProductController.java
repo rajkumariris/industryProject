@@ -1,12 +1,13 @@
-package dev.raj.industrylevelproject.Controllers;
+package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
+import dev.raj.industrylevelproject.Controllers.DBControllers.ExceptionAdvisors.ProductNotFoundException;
 import dev.raj.industrylevelproject.DTOs.ProductResponseDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Exceptions.NotFoundException;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
-import dev.raj.industrylevelproject.Services.ProductService;
+import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -86,7 +87,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{product_id}")
-    public ResponseEntity<FakeStoreproductDto> updateProduct(@PathVariable("product_id") Long Productid, @RequestBody productDto productDto){
+    public ResponseEntity<FakeStoreproductDto> updateProduct(@PathVariable("product_id") Long Productid, @RequestBody productDto productDto) throws ProductNotFoundException {
        Product product = new Product();
          product.setTitle(productDto.getTitle());
             product.setDescription(productDto.getDescription());
@@ -116,15 +117,15 @@ public class ProductController {
     }
 
     @DeleteMapping("/{product_id}")
-    public productDto deleteproduct(@PathVariable("product_id") Long productId){
-        Product product=   productService.deleteProduct(productId);
-        productDto productDto = new productDto();
-        productDto.setTitle(product.getTitle());
-        productDto.setDescription(product.getDescription());
-        productDto.setPrice(product.getPrice());
-        productDto.setCategory(product.getCategory().getName());
-        productDto.setImage(product.getImage());
-        return productDto;
+    public void deleteproduct(@PathVariable("product_id") Long productId){
+////        Product product=   productService.deleteProduct(productId);
+//        productDto productDto = new productDto();
+//        productDto.setTitle(product.getTitle());
+//        productDto.setDescription(product.getDescription());
+//        productDto.setPrice(product.getPrice());
+//        productDto.setCategory(product.getCategory().getName());
+//        productDto.setImage(product.getImage());
+//        return productDto;
     }
 
 

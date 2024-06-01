@@ -1,20 +1,27 @@
 package dev.raj.industrylevelproject.Services;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
+import dev.raj.industrylevelproject.Controllers.DBControllers.ExceptionAdvisors.ProductNotFoundException;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Models.Product;
+import dev.raj.industrylevelproject.Repositories.FakeStoreRepositories.ProductRepository;
 import dev.raj.industrylevelproject.Repositories.ProductDBRepository;
+import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-public class ProductDBImple implements ProductService{
+@Service
+public class ProductDBImple implements ProductService {
 
     ProductDBRepository productDBRepository;
 
+
     public ProductDBImple(ProductDBRepository productDBRepository){
         this.productDBRepository = productDBRepository;
+
     }
     @Override
     public List<Product> getAllProducts() {
@@ -23,7 +30,11 @@ public class ProductDBImple implements ProductService{
 
     @Override
     public Optional<Product> getProductById(Long id) {
-        return Optional.empty();
+       Product product =  productDBRepository.findProductById(id);
+       if(product == null){
+              return Optional.empty();
+       }
+       return Optional.of(product);
     }
 
     @Override
@@ -33,13 +44,30 @@ public class ProductDBImple implements ProductService{
     }
 
     @Override
-    public ResponseEntity<FakeStoreproductDto> updateProduct(Long productId, Product product) {
-        return null;
+    public ResponseEntity<FakeStoreproductDto> updateProduct(Long ProductId,Product product) throws ProductNotFoundException {
+       Product productfind = productDBRepository.findProductById(ProductId);
+       if(productfind == null) {
+           throw new ProductNotFoundException();
+       }
+        productfind.setTitle(product.getTitle());
+        productfind.setPrice(product.getPrice());
+        productfind.setDescription(product.getDescription());
+        productfind.setImage(product.getImage());
+
+
+      Product productup = productDBRepository.save(productfind);
+     FakeStoreproductDto fakeStoreproductDto = new FakeStoreproductDto();
+     fakeStoreproductDto.setPrice(productup.getPrice());
+        fakeStoreproductDto.setTitle(productup.getTitle());
+        fakeStoreproductDto.setCategory(productup.getCategory().getName());
+        return ResponseEntity.ok(fakeStoreproductDto);
     }
 
+    @Transactional
     @Override
-    public Product deleteProduct(Long id) {
-        return null;
+    public void deleteProduct(Long id){
+         productDBRepository.deleteProductById(id);
+
     }
 
     @Override

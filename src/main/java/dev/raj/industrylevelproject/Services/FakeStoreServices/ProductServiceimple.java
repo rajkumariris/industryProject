@@ -1,27 +1,19 @@
-package dev.raj.industrylevelproject.Services;
+package dev.raj.industrylevelproject.Services.FakeStoreServices;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreClient;
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceimple implements ProductService{
+public class ProductServiceimple {
 
     FakeStoreClient fakeStoreClient;
     public ProductServiceimple(FakeStoreClient fakeStoreClient) {
@@ -40,7 +32,7 @@ public class ProductServiceimple implements ProductService{
         product.setCategory(category);
         return  product;
     }
-    @Override
+
     public List<Product> getAllProducts() {
 
        List<FakeStoreproductDto> fakeStoreproductDtos=  fakeStoreClient.getAllProducts();
@@ -54,7 +46,7 @@ public class ProductServiceimple implements ProductService{
         return products;
     }
 
-    @Override
+   // @Override
     public Optional<Product> getProductById(Long id) {
         ResponseEntity<FakeStoreproductDto> fakestorentity = fakeStoreClient.getProductById(id);
         // responseEntity is for getting header, body, status code, as response
@@ -68,14 +60,14 @@ public class ProductServiceimple implements ProductService{
        return Optional.of(convertFakeStoreProductDtoToProduct(productDto)); // Optinal.of() is used to return the value
     }
 
-    @Override
+   // @Override
     public Product addProduct(Product product){
         ResponseEntity<FakeStoreproductDto> response = fakeStoreClient.addProduct(product);
         FakeStoreproductDto productDto = response.getBody();
         return convertFakeStoreProductDtoToProduct(productDto);
     }
 
-    @Override
+    //@Override
     public ResponseEntity<FakeStoreproductDto> updateProduct(Long productId,
                                  Product product) {
 
@@ -97,7 +89,7 @@ public class ProductServiceimple implements ProductService{
       return productdata;
     }
 
-    @Override
+   // @Override
     public Product deleteProduct(Long id) {
        ResponseEntity<FakeStoreproductDto> response =  fakeStoreClient.deleteProduct(id);
        FakeStoreproductDto product =  response.getBody();
