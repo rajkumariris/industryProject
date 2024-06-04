@@ -1,19 +1,21 @@
 package dev.raj.industrylevelproject.Services;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
-import dev.raj.industrylevelproject.Controllers.DBControllers.ExceptionAdvisors.ProductNotFoundException;
+//import dev.raj.industrylevelproject.Controllers.DBControllers.ProductNotFoundException;
 import dev.raj.industrylevelproject.DTOs.productDto;
+import dev.raj.industrylevelproject.Exceptions.NotFoundException;
 import dev.raj.industrylevelproject.Models.Product;
-import dev.raj.industrylevelproject.Repositories.FakeStoreRepositories.ProductRepository;
 import dev.raj.industrylevelproject.Repositories.ProductDBRepository;
 import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
 import jakarta.transaction.Transactional;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Service
+@Service(value = "ProductDBImple")
+@Primary
 public class ProductDBImple implements ProductService {
 
     ProductDBRepository productDBRepository;
@@ -29,10 +31,10 @@ public class ProductDBImple implements ProductService {
     }
 
     @Override
-    public Optional<Product> getProductById(Long id) {
+    public Optional<Product> getProductById(Long id) throws NotFoundException{
        Product product =  productDBRepository.findProductById(id);
        if(product == null){
-              return Optional.empty();
+              throw new NotFoundException("Product not found");
        }
        return Optional.of(product);
     }
@@ -44,10 +46,10 @@ public class ProductDBImple implements ProductService {
     }
 
     @Override
-    public ResponseEntity<FakeStoreproductDto> updateProduct(Long ProductId,Product product) throws ProductNotFoundException {
+    public ResponseEntity<FakeStoreproductDto> updateProduct(Long ProductId,Product product) throws NotFoundException {
        Product productfind = productDBRepository.findProductById(ProductId);
        if(productfind == null) {
-           throw new ProductNotFoundException();
+           throw new NotFoundException( "Product not found");
        }
         productfind.setTitle(product.getTitle());
         productfind.setPrice(product.getPrice());

@@ -1,7 +1,7 @@
 package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
 import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
-import dev.raj.industrylevelproject.Controllers.DBControllers.ExceptionAdvisors.ProductNotFoundException;
+//import dev.raj.industrylevelproject.Controllers.DBControllers.ProductNotFoundException;
 import dev.raj.industrylevelproject.DTOs.ProductResponseDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Exceptions.NotFoundException;
@@ -87,7 +87,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{product_id}")
-    public ResponseEntity<FakeStoreproductDto> updateProduct(@PathVariable("product_id") Long Productid, @RequestBody productDto productDto) throws ProductNotFoundException {
+    public ResponseEntity<FakeStoreproductDto> updateProduct(@PathVariable("product_id") Long Productid, @RequestBody productDto productDto) throws NotFoundException {
        Product product = new Product();
          product.setTitle(productDto.getTitle());
             product.setDescription(productDto.getDescription());

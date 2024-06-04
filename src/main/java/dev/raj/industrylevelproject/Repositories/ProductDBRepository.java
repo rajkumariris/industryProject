@@ -26,7 +26,7 @@ public interface ProductDBRepository extends JpaRepository<Product, Long>{
 
     Product  findProductById(Long id);
 
-
+        //Automated queries
     void deleteProductById(Long id);
 
     //check queires interface here we used Queries.IVVU_PRODUCTS this is varaible value is in queries interface

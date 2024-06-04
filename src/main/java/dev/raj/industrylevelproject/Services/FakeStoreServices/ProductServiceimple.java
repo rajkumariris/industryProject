@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ProductServiceimple {
+@Service(value = "ProductServiceimple")
+public class ProductServiceimple implements ProductService{
 
     FakeStoreClient fakeStoreClient;
     public ProductServiceimple(FakeStoreClient fakeStoreClient) {
@@ -90,9 +90,10 @@ public class ProductServiceimple {
     }
 
    // @Override
-    public Product deleteProduct(Long id) {
+    public void  deleteProduct(Long id) {
        ResponseEntity<FakeStoreproductDto> response =  fakeStoreClient.deleteProduct(id);
        FakeStoreproductDto product =  response.getBody();
-       return convertFakeStoreProductDtoToProduct(product);
+       convertFakeStoreProductDtoToProduct(product);
+       return;
     }
 }

@@ -3,6 +3,7 @@ package dev.raj.industrylevelproject.Controllers.FakeStoreControllers;
 
 import dev.raj.industrylevelproject.DTOs.ErrorHanlderdto;
 import dev.raj.industrylevelproject.Exceptions.NotFoundException;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,9 @@ public class ExceptionAdvisors {
         ErrorHanlderdto errorHanlderdto = new ErrorHanlderdto();
         errorHanlderdto.setErrorMessage("Product not found");
         return new ResponseEntity(errorHanlderdto, HttpStatus.NOT_FOUND);
+    }
+    @Test
+    void dosmthing(){
+
     }
 }

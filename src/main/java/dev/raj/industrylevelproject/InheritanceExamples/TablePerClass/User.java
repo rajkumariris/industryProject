@@ -16,7 +16,6 @@
 //    private String email;
 //    private String password;
 //}
-//
 //// table per class create seperate table for each class
 //// single class create only one table for all the attributes
 //// joined table it inherits common attribute from parent class along with create table with it own attribues acced via foreigh  key(
