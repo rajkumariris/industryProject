@@ -5,18 +5,20 @@ import dev.raj.industrylevelproject.Exceptions.NotFoundException;
 import dev.raj.industrylevelproject.Exceptions.ProductNotFoundException;
 import dev.raj.industrylevelproject.Models.Product;
 import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
+import org.assertj.core.api.AbstractBigDecimalAssert;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+//import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static  org.mockito.Mockito.*;
 import java.util.List;
 import java.util.Optional;
-
+import static org.assertj.core.api.Assertions.*;
 @SpringBootTest //this helps to create all the objects of product controller no need to create object of product controller
 class ProductControllerTest {
     @Autowired
@@ -48,10 +50,19 @@ class ProductControllerTest {
       Optional<Product>  products = productController.getSingledbproduct(1L);
       //assert products.get().getTitle().equals("love");
         //it compare two values give much more cleaner format
-        assertEquals("love",products.get().getTitle());
+     //   assertEquals("love",products.get().getTitle());
 
        // assertFalse(true); gives error bcoz it is saying if condition is false then it is correct
+
+
+        //assertj library used below
+        assertThat(products.get().getTitle())
+                .isEqualTo("love")
+                .isNotEqualTo("hate")
+                .contains("love")
+                .doesNotContain("hate");
     }
+
 
 
 

@@ -8,6 +8,7 @@ import dev.raj.industrylevelproject.Exceptions.NotFoundException;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
 import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class ProductController {
 
     ProductService productService; //creating object of ProductService class
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("ProductServiceimple") ProductService productService){
         this.productService = productService;
     }
 

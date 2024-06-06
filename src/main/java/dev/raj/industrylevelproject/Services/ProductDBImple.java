@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Service(value = "ProductDBImple")
+@Service("ProductDBImple")
 @Primary
 public class ProductDBImple implements ProductService {
 
