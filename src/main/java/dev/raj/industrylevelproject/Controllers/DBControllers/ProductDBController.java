@@ -49,7 +49,7 @@ public class ProductDBController {
     @GetMapping()//if the url is /products then this method will be called
     public ResponseEntity<List<Product>> getAllProducts( @Nullable  @RequestHeader("AUTH_TOKEN") String token,
                                                          @Nullable @RequestHeader("USER_ID") Long id){
-
+    //request header is used to get the value of the header
         if(token == null || id == null){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
