@@ -41,4 +41,7 @@ public interface ProductDBRepository extends JpaRepository<Product, Long>{
     public List<Product> getByIdAndTitle(Long id, String title);
 
 
+    @Query(value = "select * from product", nativeQuery = true)
+    public List<Product> findAllproduct();
+
 }
