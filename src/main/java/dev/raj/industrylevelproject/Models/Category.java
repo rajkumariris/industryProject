@@ -26,7 +26,7 @@ public class Category extends BaseModel {
   private List<Product> products;
 }
 
-//fetch mode : says how many queries we want to get
+//fetch mode : says how many queries we want to get like one query or join query or subselect query
 //fetch type :  run at once all queries or run at when we call catagory
 // select gives for each categorie gives each slect query
 //join gives all the products in one query

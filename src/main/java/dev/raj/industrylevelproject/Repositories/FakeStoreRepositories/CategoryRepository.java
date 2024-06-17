@@ -9,6 +9,5 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category, Long>{
     Category save(Category category);
     Category findCategoryById(Long id);
-
     List<Category> findAllByIdIn(List<Long> ids);
 }

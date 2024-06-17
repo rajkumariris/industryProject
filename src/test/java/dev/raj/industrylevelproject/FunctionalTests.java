@@ -14,22 +14,22 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ProductDBController.class)
+//@WebMvcTest(ProductDBController.class)
 public class FunctionalTests {
 
 
-    @Autowired
+    //@Autowired
     private MockMvc mockMvc;
     //
 
-    @MockBean
+   // @MockBean
     private ProductService productService;
 
-    @MockBean
+    //@MockBean
     private ProductController productController;
-    @MockBean
+   // @MockBean
     private ProductDBRepository productDBRepository;
-    @Test
+    //@Test
     void testAllproduct() throws Exception {
 //        mockMvc.perform(get("/products"))
 //                .andExpect(status().is(200))

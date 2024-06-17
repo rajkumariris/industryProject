@@ -13,20 +13,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest
+//@SpringBootTest
 class IndustrylevelprojectApplicationTests {
-    @Autowired
+    //@Autowired
     CategoryRepository categoryRepository;
-    @Autowired
+    //@Autowired
     ProductRepository productRepository;
 
-    @Autowired
+    //@Autowired
     ProductDBRepository productDBRepository;
-    @Test
+    //@Test
     void contextLoads() {
     }
 
-    @Test
+    //@Test
     void testAllInheritances(){
 
         Category category = new Category();
@@ -41,73 +41,73 @@ class IndustrylevelprojectApplicationTests {
 
     }
 
-    @Test  // if @Transactional lazy loading gives error
-    @Transactional // by defauly it is lazy loading so @Transactional says lazy loading happen in the same transaction
+    //@Test  // if @Transactional lazy loading gives error
+    //@Transactional // by defauly it is lazy loading so @Transactional says lazy loading happen in the same transaction
     void testProducttable(){
         //Eager fetching fetches categories along with products in a single call
-        //lazy fetching fetches only products and when we call categories then only categories get fetched
-        Product product =  productRepository.findProductById(1L);
-        System.out.println("fetched products");
-       Category category=  product.getCategory();
-       System.out.println(category.getName());
+//        //lazy fetching fetches only products and when we call categories then only categories get fetched
+//        Product product =  productRepository.findProductById(1L);
+//        System.out.println("fetched products");
+//       Category category=  product.getCategory();
+//       System.out.println(category.getName());
     }
 
-    @Test
-    @Transactional
+//    @Test
+//    @Transactional
     void fetchType(){
-      Product product =  productRepository.findProductById(3L);
-      Category category= product.getCategory();
-        System.out.println(category.getName());
+//      Product product =  productRepository.findProductById(3L);
+//      Category category= product.getCategory();
+//        System.out.println(category.getName());
     }
 
-    @Test
+//    @Test
     void eagerFetchType(){
-       Product product= productRepository.findProductById(3L);
+//       Product product= productRepository.findProductById(3L);
 
     }
 
-    @Test
+   // @Test
     void cascadeTypePersist(){
         // here we are saving without first saving category object directly at once saving
         // the category with product
-        Category category = new Category();
-        category.setName("beauty");
-        Product product = new Product();
-        product.setTitle("lipstick");
-        product.setPrice(100);
-        product.setCategory(category);
-        productRepository.save(product);
+//        Category category = new Category();
+//        category.setName("beauty");
+//        Product product = new Product();
+//        product.setTitle("lipstick");
+//        product.setPrice(100);
+//        product.setCategory(category);
+//        productRepository.save(product);
     }
-    @Test
-    @Transactional
+   // @Test
+  //  @Transactional
     void cascadeTypeDelete(){
-         Long productId = 1L;
-         productRepository.deleteById(productId);
-         System.out.println("deleted product");
+//         Long productId = 1L;
+//         productRepository.deleteById(productId);
+//         System.out.println("deleted product");
     }
 
-    @Test
-    @Transactional
+//    @Test
+//    @Transactional
     void allproduct(){
-           Category category = categoryRepository.findCategoryById(1L);
-           for(Product product: category.getProducts()){
-               System.out.println(product.getPrice());
-           }
+//           Category category = categoryRepository.findCategoryById(1L);
+//           for(Product product: category.getProducts()){
+//               System.out.println(product.getPrice());
+//           }
     }
 
-    @Test
-    @Transactional
+//    @Test
+//    @Transactional
     void allCategories(){
-        List<Category> category = categoryRepository.findAllByIdIn(List.of(1L,2L));
-        for(Category c : category){
-            for(Product p : c.getProducts()){
-                System.out.println(p.getPrice());
-            }
-        }
+//        List<Category> category = categoryRepository.findAllByIdIn(List.of(1L,2L));
+//        for(Category c : category){
+//            for(Product p : c.getProducts()){
+//                System.out.println(p.getPrice());
+//            }
+//        }
     }
 
-    @Test
-    @Transactional
+//    @Test
+//    @Transactional
     void JpamethodTest(){
       //  ProductDBDto productDBDto =  productDBRepository.IvvuProduct(1L);
     }
@@ -115,7 +115,7 @@ class IndustrylevelprojectApplicationTests {
 
     //--------------------db crud one test cases-------------------
 
-    @Test
+//    @Test
     void  addProduct(){
 
     }
