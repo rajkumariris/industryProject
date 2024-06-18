@@ -10,9 +10,13 @@ import dev.raj.industrylevelproject.Repositories.ProductDBRepository;
 import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.print.attribute.standard.PageRanges;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +88,19 @@ public class ProductDBImple implements ProductService {
 
     @Override
     public Product replaceProduct(Long productId, productDto productDto) {
+        return null;
+    }
+
+
+    @Override
+    public Page<Product> searchProducts(String searchTerm, int NumberOfproduct, int offset) {
+        //pageable is an interface we could implement that inferface and use it here
+        //this pageable provides all the metadata like is this the last page, pages, total number of pages etc
+        // but we have helper method in PageRequest class to implement pageable
+        //offset starts from 0
+        //offset is the number of products we want to skip/number of products we want to show gives the page number
+
+       Page<Product> response = productDBRepository.findAllByTitle(searchTerm, PageRequest.of(offset/NumberOfproduct, NumberOfproduct));
         return null;
     }
 }

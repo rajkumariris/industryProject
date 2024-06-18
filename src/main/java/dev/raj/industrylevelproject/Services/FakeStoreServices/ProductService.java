@@ -5,6 +5,7 @@ import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Exceptions.NotFoundException;
 import dev.raj.industrylevelproject.Models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface ProductService {
 
     public Product replaceProduct(Long productId, productDto productDto);
 
+
+    public Page<Product> searchProducts(String searchTerm, int NumberOfproduct, int offset);
 }

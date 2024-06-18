@@ -3,7 +3,10 @@ package dev.raj.industrylevelproject.Clients;
 import dev.raj.industrylevelproject.DTOs.FakeStoreCategoryDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Models.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -14,17 +17,18 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class FakeStoreClient {
 
-    RestTemplateBuilder restTemplateBuilder;
+    private  RestTemplateBuilder restTemplateBuilder;
+    @Autowired
+    private  RedisTemplate redisTemplate;
 
-    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder) {
+    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder, RedisTemplate redisTemplate) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.redisTemplate = redisTemplate;
     }
 
 
@@ -43,11 +47,25 @@ public class FakeStoreClient {
        return Arrays.asList(productDto.getBody());
 
     }
+
+    // this map is out local cache we created ourself but redis is softwware
+    // which helps to create cache for different servers
+    // large cache is created by redis
+    // internally it also storees data in different tables like products, categories etc
+    Map<Long, FakeStoreproductDto> cachedSingleProduct = new HashMap<>();
     public ResponseEntity<FakeStoreproductDto> getProductById(Long id) {
+        System.out.println("product cleint rest");
+       FakeStoreproductDto fakeStoreproductDto =  (FakeStoreproductDto) redisTemplate.opsForHash().get(id, "PRODUCTS");
+        if(fakeStoreproductDto!=null){
+            return ResponseEntity.ok(fakeStoreproductDto);
+        }
+
         RestTemplate restTemplate = restTemplateBuilder.build();//build() is used to build the object of RestTemplate
         ResponseEntity<FakeStoreproductDto> response = restTemplate.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreproductDto.class, id);
+        redisTemplate.opsForHash().put(id, "PRODUCTS",response.getBody());
+        //in put() method first->id, second -> tablename(can be anything), three->data
+        //cachedSingleProduct.put(id, response.getBody());
         return response;
-
     }
     public ResponseEntity<FakeStoreproductDto> addProduct(Product product){
         RestTemplate restTemplate = restTemplateBuilder.build();

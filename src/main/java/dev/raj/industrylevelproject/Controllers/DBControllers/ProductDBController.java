@@ -11,6 +11,7 @@ import dev.raj.industrylevelproject.Models.Product;
 import dev.raj.industrylevelproject.Models.SessionStatus;
 import dev.raj.industrylevelproject.Services.FakeStoreServices.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -29,7 +30,8 @@ public class ProductDBController {
 
     ProductService productService;
     AuthClient authClient;
-    public ProductDBController(@Qualifier("ProductDBImple") ProductService productService,AuthClient authClient){
+    //@Qualifier("ProductDBImple")
+    public ProductDBController( ProductService productService,AuthClient authClient){
         this.productService = productService;
         this.authClient = authClient;
     }
@@ -44,9 +46,16 @@ public class ProductDBController {
         return  product;
     }
 
+    //Page is used to get the data in pages with information like total pages, total elements etc along with the data
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Product>> Searchproducts(@RequestBody SearchProductDto searchProductDto){
+      return new ResponseEntity<>(productService.searchProducts(searchProductDto.getSearchTerm(),searchProductDto.getNumberOfProducts(), searchProductDto.getOffset()), HttpStatus.OK);
+
+    }
 
     //@Nullable even if the parameter is null it will not throw any error
-    @GetMapping()//if the url is /products then this method will be called
+    @GetMapping("/getProducts")//if the url is /products then this method will be called
     public ResponseEntity<List<Product>> getAllProducts( @Nullable  @RequestHeader("AUTH_TOKEN") String token,
                                                          @Nullable @RequestHeader("USER_ID") Long id){
     //request header is used to get the value of the header
@@ -85,13 +94,13 @@ public class ProductDBController {
 
 
     @GetMapping("/dbproducts/{id}")
-    public Optional<Product>getSingledbproduct(@PathVariable("id") Long id) throws NotFoundException {
-
+    public Product getSingledbproduct(@PathVariable("id") Long id) throws NotFoundException {
+        System.out.println("product controller");
        Optional<Product> product =  productService.getProductById(id);
       if(product.isEmpty()) {
             throw new NotFoundException("Product in db not found");
       }
-       return product;
+       return product.get();
     }
 
     @PostMapping()

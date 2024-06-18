@@ -5,6 +5,8 @@ import dev.raj.industrylevelproject.Clients.FakeStoreproductDto;
 import dev.raj.industrylevelproject.DTOs.productDto;
 import dev.raj.industrylevelproject.Models.Category;
 import dev.raj.industrylevelproject.Models.Product;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,7 @@ public class ProductServiceimple implements ProductService{
    // @Override
     public Optional<Product> getProductById(Long id) {
         ResponseEntity<FakeStoreproductDto> fakestorentity = fakeStoreClient.getProductById(id);
+        System.out.println("product service");
         // responseEntity is for getting header, body, status code, as response
         if(fakestorentity.getStatusCode().is1xxInformational()){
             //status code checking with responseentity response
@@ -89,7 +92,12 @@ public class ProductServiceimple implements ProductService{
       return productdata;
     }
 
-   // @Override
+    @Override
+    public Page<Product> searchProducts(String searchTerm, int NumberOfproduct, int offset) {
+        return null;
+    }
+
+    // @Override
     public void  deleteProduct(Long id) {
        ResponseEntity<FakeStoreproductDto> response =  fakeStoreClient.deleteProduct(id);
        FakeStoreproductDto product =  response.getBody();

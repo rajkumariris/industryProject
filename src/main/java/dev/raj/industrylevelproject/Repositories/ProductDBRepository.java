@@ -2,6 +2,8 @@ package dev.raj.industrylevelproject.Repositories;
 
 import dev.raj.industrylevelproject.DTOs.ProductDBDto;
 import dev.raj.industrylevelproject.Models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -43,5 +45,7 @@ public interface ProductDBRepository extends JpaRepository<Product, Long>{
 
     @Query(value = "select * from product", nativeQuery = true)
     public List<Product> findAllproduct();
+
+    public Page<Product> findAllByTitle(String title, Pageable pageable);
 
 }
